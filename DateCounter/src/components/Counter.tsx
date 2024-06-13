@@ -5,22 +5,36 @@ import { useState } from "react";
 // }
 
 function Counter() {
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   const [count, setCount] = useState(0);
 
   const date = new Date("june 21 2027");
   date.setDate(date.getDate() + count);
 
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+    setStep(Number(e.target.value))
+  }
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+    setCount(Number(e.target.value))
+  }
+
+  const handleReset = () =>{
+    setCount(0);
+    setStep(1)
+  }
+
   return (
     <div>
       <div>
-        <button onClick={() => setStep((s) => s - 1)}>-</button>
+        <input type="range" min='0' max='10' value={step} onChange={handleChange} />
+        <p>vlaue: {step}</p>
+        {/* <button onClick={() => setStep((s) => s - 1)}>-</button>
         <span>step: {step}</span>
-        <button onClick={() => setStep((s) => s + 1)}>+</button>
+        <button onClick={() => setStep((s) => s + 1)}>+</button> */}
       </div>
       <div>
         <button onClick={() => setCount((c) => c - step)}>-</button>
-        <span>Count: {count}</span>
+        <input type="tex" value={count} onChange={handleInputChange} />
         <button onClick={() => setCount((c) => c + step)}>+</button>
       </div>
 
@@ -34,6 +48,13 @@ function Counter() {
         </span>
         <span>{date.toDateString()}</span>
       </p>
+      
+      {count !==0 || step !==1 ? (<div>
+
+      <button onClick={handleReset}>Reset</button>
+      </div>):
+      (null)
+      }
     </div>
   );
 }
